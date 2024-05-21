@@ -16,7 +16,7 @@ A Fabric mod that allows you to render an image onto a map(s), allowing you to d
 - `/dither <[dither/none]>` - Changes dither mode. You can choose either the [Floyd–Steinberg dithering](https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering) or none.
 - `/size` - Displays current size
 - `/size <WIDTH> <HEIGHT>` - Changes size of map to specified one (in pixels, single map is 128x128)
-- '/normalize <WIDTH>' - Resize the image, while maintaining the original aspect ratio, by the specified width in Minecraft blocks ranging from 1 to 8.
+- `/normalize <WIDTH>` - Resize the image, while maintaining the original aspect ratio, by the specified width in Minecraft blocks ranging from 1 to 8.
 - `/grid` - Toggles visibility of map grid
 - `/save` - Exits preview and saves map as items
 - `/exit` - Exits preview without saving
