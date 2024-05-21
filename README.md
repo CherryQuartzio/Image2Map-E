@@ -1,8 +1,8 @@
-# Image2Map
+# Image2Map "E"
 <img src="https://cdn.discordapp.com/attachments/705864145169416313/969720133998239794/fabric_supported.png" width="128">
 <img src="https://cdn.discordapp.com/attachments/705864145169416313/969716884482183208/quilt_supported.png" width="128">
 
-A Fabric mod that allows you to render an image onto a map(s), allowing you to display it on your vanilla compatible server!
+A Fabric mod that allows you to render an image onto a map(s), allowing you to display it on your vanilla compatible server even in survival mode!
 
 ![Some images](https://raw.githubusercontent.com/TheEssem/Image2Map/master/images.png)
 ![More images](https://imgur.com/qy8JF5B.png)
@@ -13,22 +13,23 @@ A Fabric mod that allows you to render an image onto a map(s), allowing you to d
 - `/image2map preview <URL>` - Creates dynamic preview before saving the map as item
 
 ### Commands in preview mode
-- `/dither <[dither/none]>` - Changes dither mode
+- `/dither <[dither/none]>` - Changes dither mode. You can choose either the [Floyd–Steinberg dithering](https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering) or none.
 - `/size` - Displays current size
 - `/size <WIDTH> <HEIGHT>` - Changes size of map to specified one (in pixels, single map is 128x128)
+- '/normalize <WIDTH>' - Resize the image, while maintaining the original aspect ratio, by the specified width in Minecraft blocks ranging from 1 to 8.
 - `/grid` - Toggles visibility of map grid
 - `/save` - Exits preview and saves map as items
 - `/exit` - Exits preview without saving
 
-### Multimaps
-In case of maps bigger than 128x128 pixels, you will get them in a bundle. 
-Clicking with it on top-left corner of item frames will put all maps in correct places.
-Works for any item frame on wall, floor or ceiling.
+## Changes from original version
+For more suitable usage in survival mode, some 
+- Multimaps in bundle are disabled. Created images of any size will give all individual maps into the inventory instead. Existing map bundles will work like usual.
+- Unless in Creative Mode, player will need to have enough empty maps in their inventory to create.
+- Added `/normalize' command to allow easier image resizing in Minecraft blocks without changing the aspect ratio.
 
-## Downloads:
-- Modrinth: https://modrinth.com/mod/image2map
-- Curseforge: https://www.curseforge.com/minecraft/mc-mods/image2map
-
+## Credits
+- @Patbox - Current mod maintainer. Original repository can be found [here](https://github.com/Patbox/Image2Map).
+- @Ahydul - Most of the changes found in this fork.
 
 Will you port this to Forge/Bukkit/Paper?  
    ![no lol](https://i.imgur.com/tf5W69k.png)
