@@ -136,6 +136,7 @@ public class PreviewGui extends MapGui {
         this.canvas.sendUpdates();
     }
 
+    // Size function for size command
     public void setSize(int width, int height) {
         if (
                 this.canvas.getWidth() < width + 256 || this.canvas.getHeight() < height + 256
@@ -147,6 +148,19 @@ public class PreviewGui extends MapGui {
         this.width = width;
         this.height = height;
         this.updateImage();
+    }
+
+    // Size function for normalize command
+    public void setSize(int size) {
+        int sourceWidth = this.sourceImage.getWidth();
+        int sourceHeight = this.sourceImage.getHeight();
+        size = size > 8 ? 8*128 : size*128;
+
+        if (sourceWidth > sourceHeight) {
+            setSize(size, sourceHeight*size / sourceWidth);
+        } else {
+            setSize(sourceWidth*size / sourceHeight, size);
+        }
     }
 
     public void setDitherMode(Image2Map.DitherMode ditherMode) {
@@ -228,6 +242,17 @@ public class PreviewGui extends MapGui {
                 .executes(x -> {
                     x.getSource().setDrawGrid(!x.getSource().grid);
                     return 0;
+                })
+        );
+        COMMANDS.register(literal("normalize")
+                .then(argument("value", IntegerArgumentType.integer(1)).executes(x -> {
+                    x.getSource().setSize(IntegerArgumentType.getInteger(x, "value"));
+                    return 0;
+                }))
+                .executes(x -> {
+                    x.getSource().player.sendMessage(Text.literal("Source: " + x.getSource().sourceImage.getWidth() + " x " + x.getSource().sourceImage.getHeight()));
+                    x.getSource().player.sendMessage(Text.literal("MapImage: " + x.getSource().width + " x " + x.getSource().height));
+                return 0;
                 })
         );
     }
