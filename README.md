@@ -10,7 +10,7 @@ A Fabric and Quilt mod that allows you to render an image onto a map(s), allowin
 - `/image2map create <[dither/none]> <URL>` - Creates map with/without dither, using provided image
 - `/image2map preview <URL>` - Creates dynamic preview before saving the map as item. It's recommended to do so before creating any images.
 
-### Commands in preview mode
+### In preview mode
 - `/dither <[dither/none]>` - Changes dither mode. You can choose either the [Floyd–Steinberg dithering](https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering) or none.
 - `/size` - Displays current size
 - `/size <WIDTH> <HEIGHT>` - Changes size of map to specified one (in pixels, single map is 128x128)
