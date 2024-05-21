@@ -3,15 +3,15 @@
   "id": "image2map",
   "version": "${version}",
 
-  "name": "Image2Map",
-  "description": "Turn images into maps!",
+  "name": "Image2Map E",
+  "description": "Turn images into maps! This version of the mod has been customized for more suitable usage in survival",
   "authors": [
     "Essem",
-    "Patbox"
+    "Patbox",
+    "CherryQuartzio"
   ],
   "contact": {
-    "homepage": "https://essem.space/",
-    "sources": "https://github.com/TheEssem/Image2Map"
+    "sources": "https://github.com/CherryQuartzio/Image2Map-E"
   },
 
   "license": "MIT",
