@@ -231,7 +231,7 @@ public class Image2Map implements ModInitializer {
         if (!player.getAbilities().creativeMode) { // Inventory check not applicable in creative mode
 
             if (player.getInventory().count(Items.MAP) < items.size()) { // Inventory check failed
-                player.sendMessage(Text.literal("You need to hold "+items.size()+" empty maps.").formatted(Formatting.RED));
+                player.sendMessage(Text.literal("You need to hold "+items.size()+" empty maps").formatted(Formatting.RED));
                 return;
             } 
             else { // Inventory check valid
