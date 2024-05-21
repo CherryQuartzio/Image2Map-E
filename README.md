@@ -1,8 +1,6 @@
 # Image2Map "E"
-<img src="https://cdn.discordapp.com/attachments/705864145169416313/969720133998239794/fabric_supported.png" width="128">
-<img src="https://cdn.discordapp.com/attachments/705864145169416313/969716884482183208/quilt_supported.png" width="128">
 
-A Fabric mod that allows you to render an image onto a map(s), allowing you to display it on your vanilla compatible server even in survival mode!
+A Fabric and Quilt mod that allows you to render an image onto a map(s), allowing you to display it on your vanilla compatible server even in survival mode!
 
 ![Some images](https://raw.githubusercontent.com/TheEssem/Image2Map/master/images.png)
 ![More images](https://imgur.com/qy8JF5B.png)
