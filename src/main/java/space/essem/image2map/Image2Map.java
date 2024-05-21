@@ -76,6 +76,13 @@ public class Image2Map implements ModInitializer {
                                             )
                                     )
                             )
+                            .then(argument("normalize", IntegerArgumentType.integer(1))
+                                            .then(argument("mode", StringArgumentType.word()).suggests(new DitherModeSuggestionProvider())
+                                                    .then(argument("path", StringArgumentType.greedyString())
+                                                            .executes(this::createMap)
+                                            )
+                                    )
+                            )
                             .then(argument("mode", StringArgumentType.word()).suggests(new DitherModeSuggestionProvider())
                                     .then(argument("path", StringArgumentType.greedyString())
                                             .executes(this::createMap)
@@ -191,6 +198,18 @@ public class Image2Map implements ModInitializer {
             } catch (Throwable e) {
                 width = image.getWidth();
                 height = image.getHeight();
+                try {
+                    int size = IntegerArgumentType.getInteger(context, "normalize");
+                    size = size > 8 ? 8*128 : size*128;
+
+                    if (width > height) {
+                        height = height*size / width;
+                        width = size;
+                    } else {
+                        width = width*size / height;
+                        height = size;
+                    }
+                } catch (Throwable e2) {}
             }
 
             int finalHeight = height;
@@ -200,7 +219,7 @@ public class Image2Map implements ModInitializer {
             CompletableFuture.supplyAsync(() -> MapRenderer.render(image, mode, finalWidth, finalHeight)).thenAcceptAsync(mapImage -> {
                 var items = MapRenderer.toVanillaItems(mapImage, source.getWorld(), input);
                 giveToPlayer(player, items, input, finalWidth, finalHeight);
-                source.sendFeedback(() -> Text.literal("Done!"), false);
+                source.sendFeedback(() -> Text.literal("Done!"), false);          
             }, source.getServer());
             return null;
         }, source.getServer());
@@ -208,19 +227,36 @@ public class Image2Map implements ModInitializer {
         return 1;
     }
 
-    public static void giveToPlayer(PlayerEntity player, List<ItemStack> items, String input, int width, int height) {
-        if (items.size() == 1) {
-            player.giveItemStack(items.get(0));
-        } else {
-            var bundle = new ItemStack(Items.BUNDLE);
-            bundle.set(DataComponentTypes.BUNDLE_CONTENTS, new BundleContentsComponent(items));
-            bundle.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT.with(ImageData.CODEC,
-                    ImageData.ofBundle(MathHelper.ceil(width / 128d), MathHelper.ceil(height / 128d))).getOrThrow());
+    public static void giveToPlayer(PlayerEntity player, List<ItemStack> items, String input, int width, int height) {        
+        if (!player.getAbilities().creativeMode) { // Inventory check not applicable in creative mode
 
-            bundle.set(DataComponentTypes.LORE, new LoreComponent(List.of(Text.literal(input))));
-            bundle.set(DataComponentTypes.ITEM_NAME, Text.literal("Maps").formatted(Formatting.GOLD));
+            if (player.getInventory().count(Items.MAP) < items.size()) { // Inventory check failed
+                player.sendMessage(Text.literal("You need to hold "+items.size()+" empty maps.").formatted(Formatting.RED));
+                return;
+            } 
+            else { // Inventory check valid
+                int countRemains = items.size();   
+                for (int j = 0; j < player.getInventory().size(); ++j) {
+                    ItemStack itemStack = player.getInventory().getStack(j);
+                    if (itemStack.getItem().equals(Items.MAP)) {
+                        int numberToRemove = Math.min(itemStack.getCount(), countRemains);
+                        countRemains -= numberToRemove;
+                        itemStack.decrement(numberToRemove);
 
-            player.giveItemStack(bundle);
+                        if (countRemains == 0) break;
+                    }
+                }
+            }
+        }
+
+        // Give maps
+        for (ItemStack item : items) {
+            if (player.getInventory().getEmptySlot() == -1) { // Drop maps when inventory is full
+                player.dropStack(item);
+            }
+            else {
+                player.giveItemStack(item); // Else put it in inventory
+            }
         }
     }
 
